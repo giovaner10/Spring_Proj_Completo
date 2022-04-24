@@ -23,8 +23,8 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.listAll());
     }
 
-    @GetMapping(path = "/findname", params = "name")
-    public ResponseEntity<List<Anime>> findByName(String name){
+    @GetMapping(path = "/findname")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam("name") String name){
         return ResponseEntity.ok(animeService.findByName(name));
     }
 

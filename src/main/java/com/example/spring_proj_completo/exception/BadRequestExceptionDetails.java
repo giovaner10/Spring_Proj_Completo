@@ -1,15 +1,16 @@
 package com.example.spring_proj_completo.exception;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BadRequestExceptionDetails{
 
     private String title;
@@ -17,5 +18,18 @@ public class BadRequestExceptionDetails{
     private String details;
     private String developerMessage;
     private LocalDateTime timestamp;
+
+    private List<Field> fields;
+
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class Field{
+        private String name;
+        private String UserMesage;
+
+
+    }
 
 }

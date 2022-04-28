@@ -15,7 +15,9 @@ public enum ExceptionType {
 
     ERRO_NO_SISTEMA("Ocoreu um erro interno, tente novamente, se persistir entre em contato com o administrador", "/error"),
 
-    DADOS_INVALIDOS("Essa operação não foi concluida pois apresenta dados invalidos", "/dados-invalidos");
+    DADOS_INVALIDOS("Essa operação não foi concluida pois apresenta dados invalidos", "/dados-invalidos"),
+
+    ACESSO_NEGADO("Voçe não tem permissão para essa ação", "/Forbidden");
 
 
     private String title;

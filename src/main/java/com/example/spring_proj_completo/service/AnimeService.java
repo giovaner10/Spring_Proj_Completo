@@ -31,6 +31,10 @@ public class AnimeService {
         return animeRepository.findByName(name);
     }
 
+    public List<Anime> listAllNonPageable(){
+        return animeRepository.findAll();
+    }
+
     public Anime findByIdOrElseBadRequestException(Long id){
         return animeRepository.findById(id)
                 .orElseThrow(()->

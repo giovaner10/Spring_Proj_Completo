@@ -1,6 +1,8 @@
 package com.example.spring_proj_completo.repository;
 
 import com.example.spring_proj_completo.domain.Anime;
+
+import static com.example.spring_proj_completo.util.AnimeCreator.createAnimeToBeSaved;
 import static org.assertj.core.api.Assertions.*;
 
 import com.example.spring_proj_completo.exception.BadRequestException;
@@ -24,17 +26,11 @@ class AnimeRepositoryTest {
     @Autowired
     private AnimeRepository animeRepository;
 
-    private  Anime createAnime(){
-        return Anime.builder()
-                .name("Novo anime")
-                .build();
-    }
-
 
     @Test
     @DisplayName("save create anime in repository when sucessfull")
     void save_PersistAnime_whenSucessful(){
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSaved();
         Anime animeSaved = animeRepository.save(anime);
         assertThat(animeSaved.getId()).isNotNull();
         assertThat(animeSaved.getName()).isEqualTo(anime.getName());
@@ -44,7 +40,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("update anime in repository when sucessfull")
     void update_PersistAnime_whenSucessful(){
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSaved();
         Anime animeSaved = animeRepository.save(anime);
         animeSaved.setName("Novo nome");
         Anime saveUpdate = animeRepository.save(animeSaved);
@@ -57,7 +53,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("delete anime in repository when sucessfull")
     void delete(){
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSaved();
         Anime animeSaved = animeRepository.save(anime);
 
         assertThat(animeSaved).isNotNull();
@@ -74,16 +70,16 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("findByName list not empty anime in repository when sucessfull")
     void findByName(){
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSaved();
         Anime animeSaved = animeRepository.save(anime);
 
 
         List<Anime> byName = animeRepository.findByName(animeSaved.getName());
 
 
-        assertThat(byName).isNotEmpty();
-
-        assertThat(byName).contains(animeSaved);
+        assertThat(byName)
+                .isNotEmpty()
+                .contains(animeSaved);
 
 
     }
@@ -92,7 +88,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("findByName list empty anime in repository when sucessfull")
     void findByNameEmpty(){
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSaved();
         Anime animeSaved = animeRepository.save(anime);
 
         List<Anime> byName = animeRepository.findByName("new name");

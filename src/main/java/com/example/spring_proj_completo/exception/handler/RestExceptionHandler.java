@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -129,6 +130,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex,exceptionDetails, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handlerAccessDeniedException(AccessDeniedException ex,  WebRequest request){
+
+        BadRequestExceptionDetails exceptionDetails = createException(HttpStatus.FORBIDDEN,
+                ExceptionType.ACESSO_NEGADO,
+                ex.getLocalizedMessage()).developerMessage(ex.getClass().getName()).build();
+
+
+        return handleExceptionInternal(ex,exceptionDetails, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+
+    }
+
 
 
     public BadRequestExceptionDetails.BadRequestExceptionDetailsBuilder createException(HttpStatus status
